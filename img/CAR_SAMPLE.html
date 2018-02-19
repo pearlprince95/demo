@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>NAVIGATION SYSTEM IN HAZARDOUS ZONE USING IIOT</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body 
+		{
+           
+        }
+        
+        
+		
+    </style>
+	<link rel="icon" href="../img/icon.gif" type="image/gif" sizes="16x16">
+</head>
+
+<body onload="startTime()">
+
+
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+ 
+            <a class="navbar-brand" href="#">PEARL AUTOMATION</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a>
+				<div align="right">
+				<h3><div id="time"></h3>
+				
+				</a></li>
+				
+                 </div>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+
+
+<!–– 
+
+
+    <div class="container">
+	<img src="/img/image.gif" width="200">
+	
+	<center><h1>NAVIGATION SYSTEM IN HAZARDOUS ZONE USING IIOT</h1></center>
+	 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">GAS COMPONENTS </h3>
+                    </div>
+                    <div class="panel-body">
+					<div class="panel-body">
+                        <div class="panel-body">
+                           
+						 
+						   
+                            <span>Temperature:</span> <span id="temp">Loading..</span>
+                            <label id="stemp">
+                                <label class="label label-success">NORMAL</label>
+                            </label>
+                            <br>
+							<span>carbon-monoxide:</span> <span id="co">Loading..</span>
+                            <label id="sco">
+                                <label class="label label-danger">CRITICAL</label>
+                            </label>
+                            <br>
+							
+							<span>carbon-dioxide:</span> <span id="co2">Loading..</span>
+                            <label id="sco2">
+                                <label class="label label-danger">CRITICAL</label>
+                            </label>
+                            <br>
+							
+							<span>Ammonia:</span> <span id="nh4">Loading..</span>
+                            <label id="snh4">
+                                <label class="label label-danger">CRITICAL</label>
+                            </label>
+                        </div>
+						</div>
+						</div>
+                    
+                </div>
+
+
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">NAVIGATION CONTROL</h3>
+                    </div>
+                    <div class="panel-body">
+                        
+                            
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								     <button type="button" class="glyphicon glyphicon-arrow-up" id="up">UP</button>
+								    </div>
+								   </div>
+								  </div>
+								 </div>
+								</div>
+								<br>	
+								<button type="button" class="glyphicon glyphicon-arrow-left" id="left">LEFT</button>
+								<button type="button" class="glyphicon glyphicon-arrow-down" id="down">DOWN</button> 							 		 <button type="button" class="glyphicon glyphicon-arrow-right" id="right">RIGHT</button>
+								<br>
+								<button type="button" class="glyphicon glyphicon-arrow-right" id="stop">STOP</button>
+
+  
+								
+                                
+                            
+                        
+                    </div>
+                </div>
+
+            </div>
+        
+
+    </div>            
+	
+	<div class="row-xs-12 row-sm-12 row-md-12 row-lg-12">
+	<center><h6><span class="glyphicon glyphicon-copyright-mark"> PEARL AUTOMATION </span></h6></center>
+	<center><h6><span class="glyphicon glyphicon-registration-mark"> PEARL AUTOMATION </span></h6></center>
+	<center><h6>pearlprince95@gmail.com</h6></center>
+	<center><h6>9944002750</h6></center>
+	
+	</div>
+			
+
+
+</body>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	<script src="js/mqttws31.js"></script>
+	<script>
+    // Create a client instance: Broker, Port, Websocket Path, Client ID
+    client = new Paho.MQTT.Client("192.168.1.4", Number(9001), "/ws", "clientId-muthu")
+
+    // set callback handlers
+    client.onConnectionLost = function (responseObject) 
+	{
+        console.log("Connection Lost: " + responseObject.errorMessage);
+	}
+	
+	 client.onMessageArrived = function (message) 
+	 {
+        console.log("Message Arrived: " + message.payloadString);
+        var pload = message.payloadString;
+		var obj = jQuery.parseJSON(pload);
+		var temp = obj.temp;
+        var co = obj.co;
+        var co2 = obj.co2;
+		var nh4 = obj.nh4;
+		console.log(temp);
+        console.log(co);
+        console.log(co2);
+		console.log(nh4);
+        if (temp > 36) {
+		$("#temp").text(temp);
+		$("#co").text(co);
+		$("#co2").text(co2);
+		$("#nh4").text(nh4);
+            $("#stemp").html("<label class='label label-danger'>CRITICAL</label>");
+        } else
+            $("#stemp").html("<label class='label label-success'>NORMAL</label>");
+        if (co > 78) {
+            $("#sco").html("<label class='label label-danger'>CRITICAL</label>");
+        } else
+            $("#sco").html("<label class='label label-success'>NORMAL</label>");
+		if (co2 > 78) {
+            $("#sco2").html("<label class='label label-danger'>CRITICAL</label>");
+        } else
+            $("#sco2").html("<label class='label label-success'>NORMAL</label>");
+        if (nh4 < 45) {
+            $("#snh4").html("<label class='label label-danger'>CRITICAL</label>");
+        } else
+            $("#snh4").html("<label class='label label-success'>NORMAL</label>");
+
+        $("#temp").text(obj.tval);
+		$("#co").text(obj.hval);
+        $("#co2").text(obj.hval);
+        $("#nh4").text(obj.wval);
+
+    }
+		
+		
+		
+		
+	
+		
+		$(document).ready(function () {
+        $("#up").click(function () 
+		{
+            message = new Paho.MQTT.Message("a");
+            message.destinationName = "car";
+            client.send(message);
+		});
+		
+		$("#down").click(function () 
+		{
+            message = new Paho.MQTT.Message("b");
+            message.destinationName = "car";
+            client.send(message);
+		});
+			
+		$("#right").click(function () 
+		{
+            message = new Paho.MQTT.Message("c");
+            message.destinationName = "car";
+            client.send(message);
+		});
+		
+		$("#stop").click(function () 
+		{
+            message = new Paho.MQTT.Message("X");
+            message.destinationName = "car";
+            client.send(message);
+		});
+			
+		$("#left").click(function () 
+		{
+            message = new Paho.MQTT.Message("d");
+            message.destinationName = "car";
+            client.send(message);
+		});
+		});	
+		function onConnect() 
+		{
+        console.log("Connected!");
+        client.subscribe("car_gas");
+        }
+
+
+    client.connect({onSuccess:onConnect});
+	
+	function startTime() 
+	{
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('time').innerHTML =
+    h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+    }
+	
+    function checkTime(i) 
+    {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+	
+</script>
+		
+</html>
